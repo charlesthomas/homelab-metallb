@@ -51,4 +51,4 @@ metadata:
   namespace: metallb
 spec:
   ipAddressPools:
-  - dns 
+  - dns
