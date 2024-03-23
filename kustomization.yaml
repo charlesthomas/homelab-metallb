@@ -9,6 +9,23 @@ commonAnnotations:
 resources:
 - resources/ip-address-pools.yaml
 - resources/namespaces.yaml
+patches:
+- patch: |-
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: metallb
+      namespace: metallb
+      annotations:
+        gethomepage.dev/href: https://metallb.crt.house
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: 
+        gethomepage.dev/group: 
+        gethomepage.dev/icon: metallb
+        gethomepage.dev/name: metallb
+        gethomepage.dev/pod-selector: ""
+  target:
+    kind: Ingress
 helmCharts:
 - name: metallb
   namespace: metallb
