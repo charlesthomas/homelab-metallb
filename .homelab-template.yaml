@@ -1,4 +1,4 @@
-_commit: v1.6.12-7-g134e30d
+_commit: v1.8.2
 _src_path: /home/crthomas/code/charlesthomas/homelab-template
 additionalResources: ip-address-pools.yaml
 backups: false
@@ -9,6 +9,7 @@ helmRelease: metallb
 helmRepo: https://metallb.github.io/metallb
 helmValues: helm/values.yaml
 helmVersion: ''
+homepageEnabled: false
 ingress: false
 labels: ''
 name: metallb
