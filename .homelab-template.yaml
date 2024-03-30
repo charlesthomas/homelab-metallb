@@ -8,7 +8,7 @@ helmName: metallb
 helmRelease: metallb
 helmRepo: https://metallb.github.io/metallb
 helmValues: helm/values.yaml
-helmVersion: ''
+helmVersion: 0.14.4
 homepageEnabled: false
 ingress: false
 labels: ''

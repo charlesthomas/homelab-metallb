@@ -15,3 +15,4 @@ helmCharts:
   releaseName: metallb
   repo: https://metallb.github.io/metallb
   valuesFile: helm/values.yaml
+  version: 0.14.4

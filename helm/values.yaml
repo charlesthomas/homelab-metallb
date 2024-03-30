@@ -2,11 +2,11 @@ controller:
   logLevel: debug
   image:
     repository: quay.io/metallb/controller
-    tag: v0.14.3
+    tag: v0.14.4
     pullPolicy: IfNotPresent
 
 speaker:
   logLevel: debug
   image:
-    tag: v0.14.3
+    tag: v0.14.4
     pullPolicy: IfNotPresent
