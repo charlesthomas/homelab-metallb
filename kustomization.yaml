@@ -7,12 +7,25 @@ commonAnnotations:
   repo: https://github.com/charlesthomas/homelab-metallb
 
 resources:
+- resources/configmaps.yaml
+- resources/crds.yaml
+- resources/daemon-sets.yaml
+- resources/deployments.yaml
 - resources/ip-address-pools.yaml
 - resources/namespaces.yaml
-helmCharts:
-- name: metallb
-  namespace: metallb
-  releaseName: metallb
-  repo: https://metallb.github.io/metallb
-  valuesFile: helm/values.yaml
-  version: 0.14.4
+- resources/rbac.yaml
+- resources/secrets.yaml
+- resources/service-accounts.yaml
+- resources/services.yaml
+- resources/validating-webhook-configurations.yaml
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: all
+      namespace: metallb
+      annotations:
+        reloader.stakater.com/auto: "true"
+  target:
+    kind: Deployment
