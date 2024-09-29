@@ -127,3 +127,29 @@ webhooks:
     resources:
     - l2advertisements
   sideEffects: None
+- admissionReviewVersions:
+    - v1
+  clientConfig:
+    service:
+      name: metallb-webhook-service
+      namespace: metallb
+      path: /validate-metallb-io-v1beta1-addresspool
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: addresspoolvalidationwebhook.metallb.io
+  namespaceSelector: {}
+  objectSelector: {}
+  rules:
+    - apiGroups:
+        - metallb.io
+      apiVersions:
+        - v1beta1
+      operations:
+        - CREATE
+        - UPDATE
+      resources:
+        - addresspools
+      scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10

@@ -64,6 +64,7 @@ spec:
         - name: cp-reloader
           image: quay.io/metallb/speaker:v0.14.4
           command: ["/bin/sh", "-c", "cp -f /frr-reloader.sh /etc/frr_reloader/"]
+          resources: {}
           volumeMounts:
             - name: reloader
               mountPath: /etc/frr_reloader
@@ -71,6 +72,7 @@ spec:
         - name: cp-metrics
           image: quay.io/metallb/speaker:v0.14.4
           command: ["/bin/sh", "-c", "cp -f /frr-metrics /etc/frr_metrics/"]
+          resources: {}
           volumeMounts:
             - name: metrics
               mountPath: /etc/frr_metrics
