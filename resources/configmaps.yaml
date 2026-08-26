@@ -2,37 +2,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: metallb-excludel2
+  name: metallb-frr-k8s-frr-startup
   namespace: metallb
   labels:
-    app.kubernetes.io/name: metallb
+    app.kubernetes.io/name: frr-k8s
     app.kubernetes.io/instance: metallb
-data:
-  excludel2.yaml: |
-    announcedInterfacesToExclude:
-    - ^docker.*
-    - ^cbr.*
-    - ^dummy.*
-    - ^virbr.*
-    - ^lxcbr.*
-    - ^veth.*
-    - ^lo$
-    - ^cali.*
-    - ^tunl.*
-    - ^flannel.*
-    - ^kube-ipvs.*
-    - ^cni.*
-    - ^nodelocaldns.*
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: metallb-frr-startup
-  namespace: metallb
-  labels:
-    app.kubernetes.io/name: metallb
-    app.kubernetes.io/instance: metallb
-    app.kubernetes.io/component: speaker
+    app.kubernetes.io/component: frr-k8s
 data:
   daemons: |
     # This file tells the frr package which daemons to start.
@@ -74,8 +49,8 @@ data:
     # Check /etc/pam.d/frr if you intend to use "vtysh"!
     #
     vtysh_enable=yes
-    zebra_options="  -A 127.0.0.1 -s 90000000"
-    bgpd_options="   -A 127.0.0.1 -p 0"
+    zebra_options="  -A 127.0.0.1 -K 120 -s 90000000 --limit-fds 100000"
+    bgpd_options="   -A 127.0.0.1  -p 0 --limit-fds 100000"
     ospfd_options="  -A 127.0.0.1"
     ospf6d_options=" -A ::1"
     ripd_options="   -A 127.0.0.1"
@@ -88,8 +63,8 @@ data:
     babeld_options=" -A 127.0.0.1"
     sharpd_options=" -A 127.0.0.1"
     pbrd_options="   -A 127.0.0.1"
-    staticd_options="-A 127.0.0.1"
-    bfdd_options="   -A 127.0.0.1"
+    staticd_options="-A 127.0.0.1 --limit-fds 100000"
+    bfdd_options="   -A 127.0.0.1 --limit-fds 100000"
     fabricd_options="-A 127.0.0.1"
     vrrpd_options="  -A 127.0.0.1"
 
@@ -120,8 +95,34 @@ data:
   frr.conf: |+
     ! This file gets overriden the first time the speaker renders a config.
     ! So anything configured here is only temporary.
-    frr version 7.5.1
+    frr version 8.0
     frr defaults traditional
     hostname Router
     line vty
-    log file /etc/frr/frr.log informational
+    log stdout informational
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metallb-excludel2
+  namespace: metallb
+  labels:
+    app.kubernetes.io/name: metallb
+    app.kubernetes.io/instance: metallb
+data:
+  excludel2.yaml: |
+    announcedInterfacesToExclude:
+    - ^docker.*
+    - ^cbr.*
+    - ^dummy.*
+    - ^virbr.*
+    - ^lxcbr.*
+    - ^veth.*
+    - ^lo$
+    - ^cali.*
+    - ^tunl.*
+    - ^flannel.*
+    - ^kube-ipvs.*
+    - ^cni.*
+    - ^nodelocaldns.*
+    - ^lxc.*
