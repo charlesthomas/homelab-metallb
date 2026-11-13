@@ -286,7 +286,7 @@ spec:
             optional: true
       containers:
       - name: speaker
-        image: quay.io/metallb/speaker:v0.16.1
+        image: quay.io/metallb/speaker:v0.16.2
         args:
         - --port=9120
         - --log-level=debug
