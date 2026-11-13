@@ -111,7 +111,7 @@ spec:
         runAsUser: 65534
       containers:
       - name: controller
-        image: quay.io/metallb/controller:v0.16.1
+        image: quay.io/metallb/controller:v0.16.2
         args:
         - --port=9120
         - --log-level=debug
